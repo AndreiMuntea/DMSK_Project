@@ -38,7 +38,7 @@ CommandInterpreter::Execute(
     _In_ const std::string& Command
 )
 {
-    std::cout << "Received command " << Command << std::endl;
+    std::cout << "Received command \"" << Command << "\"" << std::endl;
     ConsoleAppLogInfo("Received command : %s", Command.c_str());
 
     auto cmdHandler = availableCommands.find(Command);
@@ -57,7 +57,7 @@ CommandInterpreter::Execute(
     }
     else
     {
-        std::cout << "Handler not found for command " << Command << std::endl;
+        std::cout << "Handler not found for command \"" << Command << "\"" << std::endl;
         ConsoleAppLogWarning("Handler not found for command : %s", Command.c_str());
     }
 }

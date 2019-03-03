@@ -14,8 +14,8 @@ int main()
     std::string command;
     while (gGlobalData.IsApplicationRunning)
     {
-        std::cout << "Your command : ";
-        std::cin >> command;
+        std::cout << "Your command: " << std::endl;
+        std::getline(std::cin, command);
         std::cout << "===================" << std::endl;
         gGlobalData.CommandInterpreter.Execute(command);
     }
