@@ -1,0 +1,14 @@
+Files Processed:
+	d:\Faculta\Master\DMSK\Lab1\Lab1WPP\scripts\log.etl
+Total Buffers Processed 4
+Total Events  Processed 12
+Total Events  Lost      0
+Total Format  Errors    0
+Total Formats Unknown   4
+Elapsed Time            40 sec
++-----------------------------------------------------------------------------------+
+|EventCount    EventName            EventType   TMF                                 |
++-----------------------------------------------------------------------------------+
+|         4    Lab1WPP              commandinterpreter_cpp35  a34f4a50-102f-95d5-6905-13b758b631c8|
+|         4    Lab1WPP              commandinterpreter_cpp30  a34f4a50-102f-95d5-6905-13b758b631c8|
++-----------------------------------------------------------------------------------+

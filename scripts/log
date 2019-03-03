@@ -1,0 +1,8 @@
+[0]3600.0F98::03/03/2019-12:21:08.493 [Lab1WPP]Received command : Help
+[0]3600.0F98::03/03/2019-12:21:08.493 [Lab1WPP]Handler found for command command : Help
+[2]3600.0F98::03/03/2019-12:21:10.557 [Lab1WPP]Received command : Help
+[2]3600.0F98::03/03/2019-12:21:10.557 [Lab1WPP]Handler found for command command : Help
+[1]3600.0F98::03/03/2019-12:21:13.717 [Lab1WPP]Received command : Help
+[1]3600.0F98::03/03/2019-12:21:13.717 [Lab1WPP]Handler found for command command : Help
+[2]3600.0F98::03/03/2019-12:21:16.574 [Lab1WPP]Received command : Exit
+[2]3600.0F98::03/03/2019-12:21:16.574 [Lab1WPP]Handler found for command command : Exit
