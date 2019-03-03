@@ -12,10 +12,10 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ConsoleAppTestProject
 {
-    class MockThreadPoolContext : public ThreadContext
+    class MockThreadPoolSquareContext : public ThreadContext
     {
     public:
-        MockThreadPoolContext(
+        MockThreadPoolSquareContext(
             _In_ std::shared_ptr<std::vector<int>> Elements,
             _In_ size_t Start,
             _In_ size_t End
@@ -24,11 +24,20 @@ namespace ConsoleAppTestProject
             End{ End }
         {};
 
-        virtual ~MockThreadPoolContext() = default;
+        virtual ~MockThreadPoolSquareContext() = default;
 
         std::shared_ptr<std::vector<int>> Elements;
         size_t Start;
         size_t End;
+    };
+
+    class MockThreadPoolCounterContext : public ThreadContext
+    {
+    public:
+        MockThreadPoolCounterContext() = default;
+        virtual ~MockThreadPoolCounterContext() = default;
+
+        volatile long long Counter = 0;
     };
 
     TEST_CLASS(ThreadPoolTests)
@@ -90,6 +99,57 @@ namespace ConsoleAppTestProject
             CrtCheckMemory __memoryState;
             RunTestSquare(-51220, 9952, 100, 7, 2, 300);
         }
+
+        TEST_METHOD(ThreadPoolTestFinalizeWorkAfterShutdown10Counters2Threads)
+        {
+            CrtCheckMemory __memoryState; 
+            RunTestFinalizeWorkAfterShutdown(2, 10);
+        }
+
+        TEST_METHOD(ThreadPoolTestFinalizeWorkAfterShutdown10Counters8Threads)
+        {
+            CrtCheckMemory __memoryState;
+            RunTestFinalizeWorkAfterShutdown(8, 10);
+        }
+
+        TEST_METHOD(ThreadPoolTestFinalizeWorkAfterShutdown100Counters8Threads)
+        {
+            CrtCheckMemory __memoryState;
+            RunTestFinalizeWorkAfterShutdown(8, 100);
+        }
+
+        static void
+        IncrementCounter(
+            _In_ std::shared_ptr<ThreadContext> Context
+        )
+        {
+            auto context = std::dynamic_pointer_cast<MockThreadPoolCounterContext>(Context);
+            if (!context)
+            {
+                throw std::exception("Invalid pointer cast");
+            }
+
+            Sleep(1000);
+            InterlockedIncrement64(&context->Counter);
+        }
+
+        void RunTestFinalizeWorkAfterShutdown(
+            _In_ uint8_t NoThreads,
+            _In_ uint8_t ExpectedCounter
+        )
+        {
+            ThreadPool tp{ NoThreads };
+            auto context = std::make_shared<MockThreadPoolCounterContext>();
+
+            for (uint8_t i = 0; i < ExpectedCounter; ++i)
+            {
+                tp.EnqueueItem(context, IncrementCounter);
+            }
+
+            tp.Shutdown();
+
+            Assert::IsTrue(ExpectedCounter == context->Counter);
+        }
         
         void RunTestSquare(
             _In_ int Low,
@@ -125,7 +185,7 @@ namespace ConsoleAppTestProject
             _In_ std::shared_ptr<ThreadContext> Context
         )
         {
-            auto context = std::dynamic_pointer_cast<MockThreadPoolContext>(Context);
+            auto context = std::dynamic_pointer_cast<MockThreadPoolSquareContext>(Context);
             if (!context)
             {
                 throw std::exception("Invalid pointer cast");
@@ -159,24 +219,24 @@ namespace ConsoleAppTestProject
             return v;
         }
 
-        std::vector<std::shared_ptr<MockThreadPoolContext>>
+        std::vector<std::shared_ptr<MockThreadPoolSquareContext>>
         PartitionVector(
             _In_ std::shared_ptr<std::vector<int>> Elements,
             _In_ size_t Limit
         )
         {
-            std::vector<std::shared_ptr<MockThreadPoolContext>> contexts;
+            std::vector<std::shared_ptr<MockThreadPoolSquareContext>> contexts;
             size_t i = 0;
 
             while (i + Limit <= Elements->size())
             {
-                contexts.emplace_back(std::make_shared<MockThreadPoolContext>(Elements, i, i + Limit));
+                contexts.emplace_back(std::make_shared<MockThreadPoolSquareContext>(Elements, i, i + Limit));
                 i += Limit;
             }
 
             if (i != Elements->size())
             {
-                contexts.emplace_back(std::make_shared<MockThreadPoolContext>(Elements, i, Elements->size()));
+                contexts.emplace_back(std::make_shared<MockThreadPoolSquareContext>(Elements, i, Elements->size()));
             }
 
             return contexts;
