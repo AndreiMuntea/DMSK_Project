@@ -58,6 +58,15 @@ namespace ConsoleAppTestProject
             Assert::IsTrue(tp.GetNoThreads() == std::thread::hardware_concurrency());
         }
 
+        TEST_METHOD(ThreadPoolNoThreadsAfterShutdown)
+        {
+            CrtCheckMemory __memoryState;
+            ThreadPool tp{ 5 };
+            tp.Shutdown(); 
+
+            Assert::IsTrue(tp.GetNoThreads() == min(5,std::thread::hardware_concurrency()));
+        }
+
         TEST_METHOD(ThreadPoolTestSquare100Elements)
         {
             CrtCheckMemory __memoryState;
@@ -73,7 +82,13 @@ namespace ConsoleAppTestProject
         TEST_METHOD(ThreadPoolTestSquare9999999Elements)
         {
             CrtCheckMemory __memoryState;
-            RunTestSquare(-420, 9912, 9999999, 9827, 8);
+            RunTestSquare(-420, 9912, 9999999, 98270, 8);
+        }
+
+        TEST_METHOD(ThreadPoolTestSquare100ElementsDelayedEnqueue)
+        {
+            CrtCheckMemory __memoryState;
+            RunTestSquare(-51220, 9952, 100, 7, 2, 300);
         }
         
         void RunTestSquare(
@@ -81,7 +96,8 @@ namespace ConsoleAppTestProject
             _In_ int High,
             _In_ size_t Count,
             _In_ size_t PartitionSize,
-            _In_ uint8_t NoThreads
+            _In_ uint8_t NoThreads,
+            _In_ DWORD Delay = 0
         )
         {
             auto initialVector = GetRandomElements(Low, High, Count);
@@ -91,6 +107,7 @@ namespace ConsoleAppTestProject
 
             for (auto& context : contexts)
             {
+                Sleep(Delay);
                 tp.EnqueueItem(context, SquareElements);
             }
 
