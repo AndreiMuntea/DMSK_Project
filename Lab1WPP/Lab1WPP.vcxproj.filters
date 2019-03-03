@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Globals">
       <UniqueIdentifier>{c17e7568-e5f0-4460-892b-09f6d1552013}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data Structures">
+      <UniqueIdentifier>{f09f8dd9-94a2-4b07-921e-0243ed7d3cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Structures">
+      <UniqueIdentifier>{e82e6e0d-69f4-44ab-ae62-acebff34d74b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -39,6 +45,9 @@
     <ClCompile Include="CommandInterpreter.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.hpp">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="CommandInterpreter.hpp">
       <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.hpp">
+      <Filter>Header Files\Data Structures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

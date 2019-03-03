@@ -16,6 +16,18 @@ CommandInterpreter::CommandInterpreter()
 
     availableCommands.emplace(
         std::piecewise_construct,
+        std::make_tuple("Start"),
+        std::make_tuple("Starts a thread pool with 5 threads", [this]() {this->StartThreadPoolCommand(); })
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("Stop"),
+        std::make_tuple("Stops the previously created thread pool", [this]() {this->StopThreadPoolCommand(); })
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
         std::make_tuple("Exit"),
         std::make_tuple("Performs a clean exit of the application", [this]() {this->ExitCommand(); })
     );
@@ -56,4 +68,34 @@ void
 CommandInterpreter::ExitCommand()
 {
     gGlobalData.IsApplicationRunning = false;
+}
+
+void 
+CommandInterpreter::StartThreadPoolCommand()
+{
+    if (gGlobalData.ThreadPool)
+    {
+        std::cout << "ThreadPool is running. Please stop it first" << std::endl;
+        ConsoleAppLogWarning("ThreadPool is already running");
+        return;
+    }
+
+    std::cout << "Creating a thread pool with 5 threads" << std::endl;
+    ConsoleAppLogInfo("Creating a thread pool with 5 threads");
+    
+    gGlobalData.ThreadPool.reset(new ThreadPool(5));
+}
+
+void 
+CommandInterpreter::StopThreadPoolCommand()
+{
+    if (!gGlobalData.ThreadPool)
+    {
+        std::cout << "ThreadPool is not running. Please start it first" << std::endl;
+        ConsoleAppLogWarning("ThreadPool is not running");
+        return;
+    }
+
+    gGlobalData.ThreadPool->Shutdown();
+    gGlobalData.ThreadPool = nullptr;
 }
