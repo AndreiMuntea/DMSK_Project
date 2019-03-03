@@ -45,7 +45,15 @@ CommandInterpreter::Execute(
     if (cmdHandler != availableCommands.end())
     {
         ConsoleAppLogInfo("Handler found for command command : %s", Command.c_str());
-        cmdHandler->second.Execute();
+        try
+        {
+            cmdHandler->second.Execute();
+        }
+        catch (std::exception& ex)
+        {
+            std::cout << "An exception has occured during command execution " << std::string(ex.what()) << std::endl;
+            ConsoleAppLogCritical("An exception has occured during command execution : %s", ex.what());
+        }
     }
     else
     {

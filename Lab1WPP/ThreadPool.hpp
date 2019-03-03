@@ -45,6 +45,8 @@ public:
         _In_ std::function<void(std::shared_ptr<ThreadContext>)> Callback
     );
 
+    size_t GetNoThreads() const;
+
 private:
     void WaitThreads();
     void DisposeEvents();

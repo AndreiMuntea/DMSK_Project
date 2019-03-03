@@ -35,6 +35,29 @@ namespace ConsoleAppTestProject
     {
     public:
 
+        TEST_METHOD(ThreadPoolEnqueueAfterShutdown)
+        {
+            CrtCheckMemory __memoryState;
+            ThreadPool tp{ 8 };
+            tp.Shutdown();
+
+            Assert::ExpectException<std::exception>([&]() {tp.EnqueueItem(nullptr, nullptr); });
+        }
+
+        TEST_METHOD(ThreadPoolInitializeWith0Threads)
+        {
+            CrtCheckMemory __memoryState;
+            ThreadPool tp{ 0 };
+            Assert::IsTrue(tp.GetNoThreads() == std::thread::hardware_concurrency());
+        }
+
+        TEST_METHOD(ThreadPoolInitializeWith200Threads)
+        {
+            CrtCheckMemory __memoryState;
+            ThreadPool tp{ 200 };
+            Assert::IsTrue(tp.GetNoThreads() == std::thread::hardware_concurrency());
+        }
+
         TEST_METHOD(ThreadPoolTestSquare100Elements)
         {
             CrtCheckMemory __memoryState;

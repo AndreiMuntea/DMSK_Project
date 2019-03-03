@@ -74,8 +74,8 @@ ThreadPool::EnqueueItem(
 
     if (pendingShutdown)
     {
-        ConsoleAppLogWarning("Thread pool is pending shutdown!");
-        return;
+        ConsoleAppLogError("Thread pool is pending shutdown!");
+        throw std::exception("Thread pool is pending shutdown!");
     }
 
     items.emplace(std::make_shared<ThreadWorkerItem>(Context, Callback));
@@ -83,6 +83,12 @@ ThreadPool::EnqueueItem(
     {
         SetEvent(events[ITEM_ENQUEUED_NOTIFICATION_EVENT]);
     }
+}
+
+size_t 
+ThreadPool::GetNoThreads() const
+{
+    return threads.size();
 }
 
 void 
