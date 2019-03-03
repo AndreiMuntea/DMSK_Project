@@ -79,25 +79,25 @@ namespace ConsoleAppTestProject
         TEST_METHOD(ThreadPoolTestSquare100Elements)
         {
             CrtCheckMemory __memoryState;
-            RunTestSquare(-51220, 9952, 100, 3, 2);
+            RunTestSquare(-51, 99, 100, 3, 2);
         }
 
         TEST_METHOD(ThreadPoolTestSquare100000Elements)
         {
             CrtCheckMemory __memoryState;
-            RunTestSquare(-2051, 99512, 100000, 3, 2);
+            RunTestSquare(-201, 92, 100000, 3, 2);
         }
 
         TEST_METHOD(ThreadPoolTestSquare9999999Elements)
         {
             CrtCheckMemory __memoryState;
-            RunTestSquare(-420, 9912, 9999999, 98270, 8);
+            RunTestSquare(-420, 992, 9999999, 98270, 8);
         }
 
         TEST_METHOD(ThreadPoolTestSquare100ElementsDelayedEnqueue)
         {
             CrtCheckMemory __memoryState;
-            RunTestSquare(-51220, 9952, 100, 7, 2, 300);
+            RunTestSquare(-520, 952, 100, 7, 2, 300);
         }
 
         TEST_METHOD(ThreadPoolTestFinalizeWorkAfterShutdown10Counters2Threads)
