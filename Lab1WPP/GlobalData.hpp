@@ -3,14 +3,27 @@
 
 #include "CommandInterpreter.hpp"
 #include "ThreadPool.hpp"
+#include "DynamicImports.hpp"
 
 #include <memory>
 
 struct GlobalData
 {
+public:
+    GlobalData();
+    ~GlobalData();
+
     bool IsApplicationRunning = true;
     CommandInterpreter CommandInterpreter;
     std::shared_ptr<ThreadPool> ThreadPool = nullptr;
+
+    HMODULE NtDllModuleHandle = nullptr;
+    PFUNC_ZwQueryInformationProcess ZwQueryInformationProcess = nullptr;
+    PFUNC_ZwReadVirtualMemory ZwReadVirtualMemory = nullptr;
+
+private:
+    void SolveImports();
+    void CleanImports();
 };
 
 extern GlobalData gGlobalData;
