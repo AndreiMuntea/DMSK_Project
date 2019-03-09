@@ -8,7 +8,7 @@ void
 PuDumpActiveProcessesPsapi();
 
 void 
-PuDumpActiveProcessesNtQuerySystemInformation();
+PuDumpActiveProcessesZwQuerySystemInformation();
 
 
 #endif //__PROCESS_UTILS_HPP__

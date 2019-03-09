@@ -32,6 +32,25 @@ typedef enum _PROCESSINFOCLASS {
     ProcessBasicInformation = 0,
 } PROCESSINFOCLASS;
 
+typedef enum _SYSTEM_INFORMATION_CLASS {
+    SystemProcessInformation = 5,
+} SYSTEM_INFORMATION_CLASS;
+
+typedef struct _SYSTEM_PROCESS_INFORMATION {
+    ULONG           NextEntryOffset;
+    ULONG           NumberOfThreads;
+    BYTE            Reserved1[48];
+    PVOID           Reserved2[3];
+    HANDLE          UniqueProcessId;
+    PVOID           Reserved3;
+    ULONG           HandleCount;
+    BYTE            Reserved4[4];
+    PVOID           Reserved5[11];
+    SIZE_T          PeakPagefileUsage;
+    SIZE_T          PrivatePageCount;
+    LARGE_INTEGER   Reserved6[6];
+} SYSTEM_PROCESS_INFORMATION, *PSYSTEM_PROCESS_INFORMATION;
+
 typedef struct _PEB_LDR_DATA {
     BYTE       Reserved1[8];
     PVOID      Reserved2[3];
@@ -90,6 +109,17 @@ typedef struct _PROCESS_BASIC_INFORMATION {
     PVOID       Reserved3;
 } PROCESS_BASIC_INFORMATION;
 
+#ifndef STATUS_INFO_LENGTH_MISMATCH
+#define STATUS_INFO_LENGTH_MISMATCH      ((NTSTATUS)0xC0000004L)
+#endif 
+
+#ifndef STATUS_BUFFER_TOO_SMALL
+#define STATUS_BUFFER_TOO_SMALL          ((NTSTATUS)0xC0000023L)
+#endif 
+
+#ifndef STATUS_SUCCESS
+#define STATUS_SUCCESS                   ((NTSTATUS)0x00000000L)
+#endif 
 
 #ifndef NT_SUCCESS
 #define NT_SUCCESS(Status)  (((NTSTATUS)(Status)) >= 0)

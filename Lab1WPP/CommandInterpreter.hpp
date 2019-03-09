@@ -22,8 +22,6 @@ private:
     void StartThreadPoolCommand();
     void StopThreadPoolCommand();
 
-    void ParseProcessesUsingToolHelp32Snapshot();
-
     std::unordered_map<std::string, Command> availableCommands;
 };
 

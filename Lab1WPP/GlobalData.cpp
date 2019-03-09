@@ -31,21 +31,30 @@ GlobalData::SolveImports()
     }
 
     ZwQueryInformationProcess = (PFUNC_ZwQueryInformationProcess)GetProcAddress(NtDllModuleHandle, "ZwQueryInformationProcess");
-    if (!NtDllModuleHandle)
+    if (!ZwQueryInformationProcess)
     {
         CleanImports();
         std::wcout << "GetProcAddress ZwQueryInformationProcess failed with GLE = " << GetLastError() << std::endl;
-        ConsoleAppLogCritical("LoadLibrary ntdll.dll has failed with GLE = %d", GetLastError());
-        throw std::exception("LoadLibrary ntdll.dll has failed");
+        ConsoleAppLogCritical("GetProcAddress ZwQueryInformationProcess has failed with GLE = %d", GetLastError());
+        throw std::exception("GetProcAddress ZwQueryInformationProcess has failed");
     }
 
     ZwReadVirtualMemory = (PFUNC_ZwReadVirtualMemory)GetProcAddress(NtDllModuleHandle, "ZwReadVirtualMemory");
-    if (!NtDllModuleHandle)
+    if (!ZwReadVirtualMemory)
     {
         CleanImports();
         std::wcout << "GetProcAddress ZwReadVirtualMemory failed with GLE = " << GetLastError() << std::endl;
         ConsoleAppLogCritical("GetProcAddress ZwReadVirtualMemory failed with GLE = %d", GetLastError());
-        throw std::exception("LoadLibrary ntdll.dll has failed");
+        throw std::exception("GetProcAddress ZwReadVirtualMemory has failed");
+    }
+
+    ZwQuerySystemInformation = (PFUNC_ZwQuerySystemInformation)GetProcAddress(NtDllModuleHandle, "ZwQuerySystemInformation");
+    if (!ZwQuerySystemInformation)
+    {
+        CleanImports();
+        std::wcout << "GetProcAddress ZwQuerySystemInformation failed with GLE = " << GetLastError() << std::endl;
+        ConsoleAppLogCritical("GetProcAddress ZwQuerySystemInformation failed with GLE = %d", GetLastError());
+        throw std::exception("GetProcAddress ZwQuerySystemInformation has failed");
     }
 }
 
@@ -65,5 +74,10 @@ void GlobalData::CleanImports()
     if (ZwReadVirtualMemory)
     {
         ZwReadVirtualMemory = nullptr;
+    }
+
+    if (ZwQuerySystemInformation)
+    {
+        ZwQuerySystemInformation = nullptr;
     }
 }

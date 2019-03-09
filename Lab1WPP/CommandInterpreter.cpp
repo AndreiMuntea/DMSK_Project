@@ -30,7 +30,19 @@ CommandInterpreter::CommandInterpreter()
     availableCommands.emplace(
         std::piecewise_construct,
         std::make_tuple("DumpProcessesToolHelp32"),
-        std::make_tuple("Dumps active processes using ToolHelp32Snapshot", [this]() {this->ParseProcessesUsingToolHelp32Snapshot(); })
+        std::make_tuple("Dumps active processes using ToolHelp32Snapshot", PuDumpActiveProcessesToolHelp32Snapshot)
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("DumpProcessesPsApi"),
+        std::make_tuple("Dumps active processes using PsApi", PuDumpActiveProcessesPsapi)
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("DumpProcessesZwQuerySystemInformation"),
+        std::make_tuple("Dumps active processes using ZwQuerySystemInformation", PuDumpActiveProcessesZwQuerySystemInformation)
     );
 
     availableCommands.emplace(
@@ -113,10 +125,4 @@ CommandInterpreter::StopThreadPoolCommand()
 
     gGlobalData.ThreadPool->Shutdown();
     gGlobalData.ThreadPool = nullptr;
-}
-
-void 
-CommandInterpreter::ParseProcessesUsingToolHelp32Snapshot()
-{
-    PuDumpActiveProcessesToolHelp32Snapshot();
 }

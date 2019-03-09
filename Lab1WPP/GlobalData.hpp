@@ -20,6 +20,7 @@ public:
     HMODULE NtDllModuleHandle = nullptr;
     PFUNC_ZwQueryInformationProcess ZwQueryInformationProcess = nullptr;
     PFUNC_ZwReadVirtualMemory ZwReadVirtualMemory = nullptr;
+    PFUNC_ZwQuerySystemInformation ZwQuerySystemInformation = nullptr;
 
 private:
     void SolveImports();
