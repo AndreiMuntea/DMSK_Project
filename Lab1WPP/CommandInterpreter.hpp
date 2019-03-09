@@ -18,8 +18,11 @@ public:
 private:
     void PrintHelpCommand();
     void ExitCommand();
+
     void StartThreadPoolCommand();
     void StopThreadPoolCommand();
+
+    void ParseProcessesUsingToolHelp32Snapshot();
 
     std::unordered_map<std::string, Command> availableCommands;
 };

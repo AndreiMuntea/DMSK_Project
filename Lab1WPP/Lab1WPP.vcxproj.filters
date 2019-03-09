@@ -31,6 +31,15 @@
     <Filter Include="Source Files\Data Structures">
       <UniqueIdentifier>{e82e6e0d-69f4-44ab-ae62-acebff34d74b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Process Utils">
+      <UniqueIdentifier>{448687c8-7c27-429c-9828-8390523a87a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dynamic Imports">
+      <UniqueIdentifier>{e8519344-dada-44c3-936d-b81a116165b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Process Utils">
+      <UniqueIdentifier>{22eb11a0-7c48-408f-8e3c-9cf05a47b29b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -48,6 +57,9 @@
     <ClCompile Include="ThreadPool.cpp">
       <Filter>Source Files\Data Structures</Filter>
     </ClCompile>
+    <ClCompile Include="ProcessUtils.cpp">
+      <Filter>Source Files\Process Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.hpp">
@@ -61,6 +73,15 @@
     </ClInclude>
     <ClInclude Include="ThreadPool.hpp">
       <Filter>Header Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="NtDefinitions.hpp">
+      <Filter>Header Files\Dynamic Imports</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicImports.hpp">
+      <Filter>Header Files\Dynamic Imports</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessUtils.hpp">
+      <Filter>Header Files\Process Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

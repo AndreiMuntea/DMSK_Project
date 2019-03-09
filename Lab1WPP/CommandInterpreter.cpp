@@ -2,6 +2,7 @@
 #include "CommandInterpreter.tmh"
 #include "CommandInterpreter.hpp"
 #include "GlobalData.hpp"
+#include "ProcessUtils.hpp"
 
 #include <iostream>
 #include <functional>
@@ -24,6 +25,12 @@ CommandInterpreter::CommandInterpreter()
         std::piecewise_construct,
         std::make_tuple("Stop"),
         std::make_tuple("Stops the previously created thread pool", [this]() {this->StopThreadPoolCommand(); })
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("DumpProcessesToolHelp32"),
+        std::make_tuple("Dumps active processes using ToolHelp32Snapshot", [this]() {this->ParseProcessesUsingToolHelp32Snapshot(); })
     );
 
     availableCommands.emplace(
@@ -106,4 +113,10 @@ CommandInterpreter::StopThreadPoolCommand()
 
     gGlobalData.ThreadPool->Shutdown();
     gGlobalData.ThreadPool = nullptr;
+}
+
+void 
+CommandInterpreter::ParseProcessesUsingToolHelp32Snapshot()
+{
+    PuDumpActiveProcessesToolHelp32Snapshot();
 }
