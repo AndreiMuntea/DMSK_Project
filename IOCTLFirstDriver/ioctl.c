@@ -4,9 +4,36 @@
 
 static UNICODE_STRING gDeviceName = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDeviceName");
 static UNICODE_STRING gSymbolicLink = RTL_CONSTANT_STRING(L"\\DosDevices\\MyIoctlSymLink");
+static UNICODE_STRING gDeviceNameSecondDriver = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDeviceName2");
 
 static PDEVICE_OBJECT gDeviceObject = NULL;
+static PDEVICE_OBJECT gDeviceObjectSecondDriver = NULL;
+static PFILE_OBJECT gFileObjectSecondDriver = NULL;
 
+static NTSTATUS
+IoctlCompletionRoutine(
+    _In_ PDEVICE_OBJECT DeviceObject,
+    _In_ PIRP Irp,
+    _In_opt_ PVOID Context
+)
+{
+    UNREFERENCED_PARAMETER(DeviceObject);
+    UNREFERENCED_PARAMETER(Context);
+
+    IoctlFirstDriverLogInfo("Completion Routine for IRP 0x%p was completed with status 0x%X", Irp, Irp->IoStatus.Status);
+    return STATUS_SUCCESS;
+}
+
+static NTSTATUS 
+IoctlPassIrp(
+    _Inout_ PIRP Irp
+)
+{
+    IoCopyCurrentIrpStackLocationToNext(Irp);
+    IoctlFirstDriverLogInfo("Setting Completion routine for IRP 0x%p", Irp);
+    IoSetCompletionRoutine(Irp, IoctlCompletionRoutine, NULL, TRUE, TRUE, TRUE);
+    return IoCallDriver(gDeviceObjectSecondDriver, Irp);
+}
 
 _Use_decl_annotations_
 NTSTATUS 
@@ -26,12 +53,19 @@ IoctlInitDeviceObject(
         FALSE,                          // Exclusive
         &gDeviceObject                  // Device object
     );
-
     if (!NT_SUCCESS(status))
     {
         IoctlFirstDriverLogError("IoCreateDevice has failed with status 0x%X", status);
-        return status;
+        goto CleanUp;
     }
+
+    status = IoGetDeviceObjectPointer(&gDeviceNameSecondDriver, FILE_ALL_ACCESS, &gFileObjectSecondDriver, &gDeviceObjectSecondDriver);
+    if (!NT_SUCCESS(status))
+    {
+        IoctlFirstDriverLogError("IoGetDeviceObjectPointer has failed with status 0x%X", status);
+        goto CleanUp;
+    }
+    gDeviceObject->StackSize = gDeviceObjectSecondDriver->StackSize + 1;
 
     IoctlFirstDriverLogInfo("Will create a symlink for device %wZ with name %wZ", &gDeviceName, &gSymbolicLink);
     status = IoCreateSymbolicLink(&gSymbolicLink, &gDeviceName);
@@ -44,8 +78,17 @@ IoctlInitDeviceObject(
 CleanUp:
     if (!NT_SUCCESS(status))
     {
-        IoDeleteDevice(gDeviceObject);
-        gDeviceObject = NULL;
+        if (gDeviceObject)
+        {
+            IoDeleteDevice(gDeviceObject);
+            gDeviceObject = NULL;
+        }
+        if (gFileObjectSecondDriver)
+        {
+            ObDereferenceObject(gFileObjectSecondDriver);
+            gFileObjectSecondDriver = NULL;
+            gDeviceObjectSecondDriver = NULL;
+        }
     }
 
     return status;
@@ -66,6 +109,13 @@ IoctlUninitDeviceObject()
     {
         IoDeleteDevice(gDeviceObject);
         gDeviceObject = NULL;
+    }
+
+    if (gFileObjectSecondDriver)
+    {
+        ObDereferenceObject(gFileObjectSecondDriver);
+        gFileObjectSecondDriver = NULL;
+        gDeviceObjectSecondDriver = NULL;
     }
 }
 
@@ -96,12 +146,14 @@ IoctlHandleIrpMjDeviceControl(
         break;
     };
 
-    Irp->IoStatus.Status = status;
-    Irp->IoStatus.Information = 0;
+    if (!NT_SUCCESS(status))
+    {
+        Irp->IoStatus.Status = status;
+        IoCompleteRequest(Irp, IO_NO_INCREMENT);
+        return status;
+    }
 
-    IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
-    return status;
+    return IoctlPassIrp(Irp);
 }
 
 _Use_decl_annotations_
@@ -114,12 +166,7 @@ IoctlHandleIrpMjCreate(
     UNREFERENCED_PARAMETER(DeviceObject);
     IoctlFirstDriverLogInfo("IoctlHandleIrpMjCreate was called");
 
-    Irp->IoStatus.Status = STATUS_SUCCESS;
-    Irp->IoStatus.Information = 0;
-
-    IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
-    return STATUS_SUCCESS;
+    return IoctlPassIrp(Irp);
 }
 
 _Use_decl_annotations_
@@ -132,10 +179,5 @@ IoctlHandleIrpMjClose(
     UNREFERENCED_PARAMETER(DeviceObject);
     IoctlFirstDriverLogInfo("IoctlHandleIrpMjClose was called");
 
-    Irp->IoStatus.Status = STATUS_SUCCESS;
-    Irp->IoStatus.Information = 0;
-
-    IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
-    return STATUS_SUCCESS;
+    return IoctlPassIrp(Irp);
 }

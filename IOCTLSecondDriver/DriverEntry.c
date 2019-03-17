@@ -34,7 +34,6 @@ DriverEntry(
 
     DriverObject->DriverUnload = DriverUnload;
 
-    __debugbreak();
     status = IoctlInitDeviceObject(DriverObject);
     if (!NT_SUCCESS(status))
     {

@@ -2,7 +2,7 @@
 #include "trace.h"
 #include "ioctl.tmh"
 
-static UNICODE_STRING gDeviceName = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDeviceName");
+static UNICODE_STRING gDeviceName = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDeviceName2");
 
 static PDEVICE_OBJECT gDeviceObject = NULL;
 
