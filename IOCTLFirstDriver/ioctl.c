@@ -68,3 +68,74 @@ IoctlUninitDeviceObject()
         gDeviceObject = NULL;
     }
 }
+
+_Use_decl_annotations_
+NTSTATUS 
+IoctlHandleIrpMjDeviceControl(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+)
+{
+    UNREFERENCED_PARAMETER(DeviceObject);
+    IoctlFirstDriverLogInfo("IoctlHandleIrpMjDeviceControl was called");
+
+    PIO_STACK_LOCATION irpSp = IoGetCurrentIrpStackLocation(Irp);
+    NTSTATUS status = STATUS_SUCCESS;
+
+    switch (irpSp->Parameters.DeviceIoControl.IoControlCode)
+    {
+    case FIRST_IOCTL_CODE:
+        IoctlFirstDriverLogInfo("First IOCTL was called!");
+        break;
+    case SECOND_IOCTL_CODE:
+        IoctlFirstDriverLogInfo("Second IOCTL was called!");
+        break;
+    default:
+        IoctlFirstDriverLogWarning("Invalid IOCTL was called!");
+        status = STATUS_NOT_SUPPORTED;
+        break;
+    };
+
+    Irp->IoStatus.Status = status;
+    Irp->IoStatus.Information = 0;
+
+    IoCompleteRequest(Irp, IO_NO_INCREMENT);
+
+    return status;
+}
+
+_Use_decl_annotations_
+NTSTATUS
+IoctlHandleIrpMjCreate(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+)
+{
+    UNREFERENCED_PARAMETER(DeviceObject);
+    IoctlFirstDriverLogInfo("IoctlHandleIrpMjCreate was called");
+
+    Irp->IoStatus.Status = STATUS_SUCCESS;
+    Irp->IoStatus.Information = 0;
+
+    IoCompleteRequest(Irp, IO_NO_INCREMENT);
+
+    return STATUS_SUCCESS;
+}
+
+_Use_decl_annotations_
+NTSTATUS
+IoctlHandleIrpMjClose(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+)
+{
+    UNREFERENCED_PARAMETER(DeviceObject);
+    IoctlFirstDriverLogInfo("IoctlHandleIrpMjClose was called");
+
+    Irp->IoStatus.Status = STATUS_SUCCESS;
+    Irp->IoStatus.Information = 0;
+
+    IoCompleteRequest(Irp, IO_NO_INCREMENT);
+
+    return STATUS_SUCCESS;
+}

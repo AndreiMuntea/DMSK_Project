@@ -40,5 +40,9 @@ DriverEntry(
         return status;
     }
 
+    DriverObject->MajorFunction[IRP_MJ_CREATE] = IoctlHandleIrpMjCreate;
+    DriverObject->MajorFunction[IRP_MJ_CLOSE] = IoctlHandleIrpMjClose;
+    DriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = IoctlHandleIrpMjDeviceControl;
+
     return STATUS_SUCCESS;
 }

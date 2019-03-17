@@ -3,6 +3,11 @@
 
 #include <ntddk.h>
 
+#define IOCTL_DEVICE_TYPE   56789
+
+#define FIRST_IOCTL_CODE    CTL_CODE(IOCTL_DEVICE_TYPE, 0x850, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define SECOND_IOCTL_CODE   CTL_CODE(IOCTL_DEVICE_TYPE, 0x851, METHOD_BUFFERED, FILE_ANY_ACCESS)
+
 _Must_inspect_result_
 NTSTATUS
 IoctlInitDeviceObject(
@@ -12,5 +17,26 @@ IoctlInitDeviceObject(
 
 VOID
 IoctlUninitDeviceObject();
+
+_Must_inspect_result_
+NTSTATUS
+IoctlHandleIrpMjDeviceControl(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+);
+
+_Must_inspect_result_
+NTSTATUS
+IoctlHandleIrpMjCreate(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+);
+
+_Must_inspect_result_
+NTSTATUS
+IoctlHandleIrpMjClose(
+    _Inout_ PDEVICE_OBJECT DeviceObject,
+    _Inout_ PIRP Irp
+);
 
 #endif //__IOCTL_H__ 

@@ -3,6 +3,7 @@
 #include "CommandInterpreter.hpp"
 #include "GlobalData.hpp"
 #include "ProcessUtils.hpp"
+#include "Ioctl.hpp"
 
 #include <iostream>
 #include <functional>
@@ -43,6 +44,18 @@ CommandInterpreter::CommandInterpreter()
         std::piecewise_construct,
         std::make_tuple("DumpProcessesZwQuerySystemInformation"),
         std::make_tuple("Dumps active processes using ZwQuerySystemInformation", PuDumpActiveProcessesZwQuerySystemInformation)
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("SendFirstIoctl"),
+        std::make_tuple("Sends first ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(FIRST_IOCTL_CODE)); })
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("SendSecondIoctl"),
+        std::make_tuple("Sends second ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(SECOND_IOCTL_CODE)); })
     );
 
     availableCommands.emplace(
