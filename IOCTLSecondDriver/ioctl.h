@@ -19,6 +19,7 @@ VOID
 IoctlUninitDeviceObject();
 
 _Must_inspect_result_
+_Dispatch_type_(IRP_MJ_DEVICE_CONTROL)
 NTSTATUS
 IoctlHandleIrpMjDeviceControl(
     _Inout_ PDEVICE_OBJECT DeviceObject,
@@ -26,6 +27,7 @@ IoctlHandleIrpMjDeviceControl(
 );
 
 _Must_inspect_result_
+_Dispatch_type_(IRP_MJ_CREATE)
 NTSTATUS
 IoctlHandleIrpMjCreate(
     _Inout_ PDEVICE_OBJECT DeviceObject,
@@ -33,10 +35,10 @@ IoctlHandleIrpMjCreate(
 );
 
 _Must_inspect_result_
+_Dispatch_type_(IRP_MJ_CLOSE)
 NTSTATUS
 IoctlHandleIrpMjClose(
     _Inout_ PDEVICE_OBJECT DeviceObject,
     _Inout_ PIRP Irp
 );
-
 #endif //__IOCTL_H__ 
