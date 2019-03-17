@@ -23,19 +23,22 @@ def CreateDirs(DirectoryPath):
 
 def CopyProjectFiles(Platform, Configuration, OutDir, ProjectName, BinPath):
     project_pdb = ProjectName + '.pdb'
-    project_exe = ProjectName + '.exe'
+    project_out = ProjectName + '.exe'
+    
+    if ProjectName in ['IOCTLFirstDriver']:
+        project_out = ProjectName + '.sys'
 
     pdb_src = os.path.join(OutDir, project_pdb)
     pdb_dst = os.path.join(BinPath, "bin", ProjectName, Platform, Configuration, project_pdb)
 
-    exe_src = os.path.join(OutDir, project_exe)
-    exe_dst = os.path.join(BinPath, "bin", ProjectName, Platform, Configuration, project_exe)
+    out_src = os.path.join(OutDir, project_out)
+    out_dst = os.path.join(BinPath, "bin", ProjectName, Platform, Configuration, project_out)
 
     CreateDirs(os.path.dirname(pdb_dst))
-    CreateDirs(os.path.dirname(exe_dst))
+    CreateDirs(os.path.dirname(out_dst))
 
     Copy(pdb_src, pdb_dst)
-    Copy(exe_src, exe_dst)
+    Copy(out_src, out_dst)
     
 def GenerateTmfFiles(Platform, Configuration, OutDir, ProjectName, BinPath):
     pdb_path = os.path.join(BinPath, "bin", ProjectName, Platform, Configuration)
