@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Process Utils">
       <UniqueIdentifier>{22eb11a0-7c48-408f-8e3c-9cf05a47b29b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Ioctl">
+      <UniqueIdentifier>{3fa3fa0e-3bc6-4dd2-80dc-156882f78e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ioctl">
+      <UniqueIdentifier>{e70aa786-2e05-4df0-a492-6cf8cd160858}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -59,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="ProcessUtils.cpp">
       <Filter>Source Files\Process Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Ioctl.cpp">
+      <Filter>Source Files\Ioctl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="ProcessUtils.hpp">
       <Filter>Header Files\Process Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Ioctl.hpp">
+      <Filter>Header Files\Ioctl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

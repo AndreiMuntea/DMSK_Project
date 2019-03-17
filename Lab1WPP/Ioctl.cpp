@@ -36,6 +36,5 @@ IoctlSendIoctl(
         ConsoleAppLogError("DeviceIoControl failed with GLE=%d", GetLastError());
     }
 
-CleanUp:
     CloseHandle(deviceHandle);
 }

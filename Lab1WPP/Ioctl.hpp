@@ -1,7 +1,7 @@
 #ifndef __IOCTL_HPP__ 
 #define __IOCTL_HPP__ 
 
-#include <sal.h>
+#include <Windows.h>
 #include <winioctl.h>
 
 #define IOCTL_DEVICE_TYPE   56789

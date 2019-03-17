@@ -79,6 +79,7 @@
       <WppEnabled>true</WppEnabled>
       <WppScanConfigurationData>$(ProjectDir)\trace.h</WppScanConfigurationData>
       <WppMinimalRebuildFromTracking>false</WppMinimalRebuildFromTracking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
       <Command>py -3 $(SolutionDir)scripts\postbuild.py $(Platform) $(Configuration) $(OutDir) $(ProjectName) $(SolutionDir)bin</Command>
@@ -93,6 +94,7 @@
       <WppEnabled>true</WppEnabled>
       <WppScanConfigurationData>$(ProjectDir)\trace.h</WppScanConfigurationData>
       <WppMinimalRebuildFromTracking>false</WppMinimalRebuildFromTracking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <PostBuildEvent>
       <Command>py -3 $(SolutionDir)scripts\postbuild.py $(Platform) $(Configuration) $(OutDir) $(ProjectName) $(SolutionDir)bin</Command>
@@ -110,6 +112,7 @@
       <WppEnabled>true</WppEnabled>
       <WppScanConfigurationData>$(ProjectDir)\trace.h</WppScanConfigurationData>
       <WppMinimalRebuildFromTracking>false</WppMinimalRebuildFromTracking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -131,6 +134,7 @@
       <WppEnabled>true</WppEnabled>
       <WppScanConfigurationData>$(ProjectDir)\trace.h</WppScanConfigurationData>
       <WppMinimalRebuildFromTracking>false</WppMinimalRebuildFromTracking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -144,6 +148,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandInterpreter.cpp" />
     <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="Ioctl.cpp" />
     <ClCompile Include="ProcessUtils.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="ThreadPool.cpp" />
@@ -153,6 +158,7 @@
     <ClInclude Include="CommandInterpreter.hpp" />
     <ClInclude Include="DynamicImports.hpp" />
     <ClInclude Include="GlobalData.hpp" />
+    <ClInclude Include="Ioctl.hpp" />
     <ClInclude Include="NtDefinitions.hpp" />
     <ClInclude Include="ProcessUtils.hpp" />
     <ClInclude Include="ThreadPool.hpp" />
