@@ -10,7 +10,6 @@ IoctlSendIoctl(
     _In_ DWORD IoctlCode
 )
 {
-
     auto deviceHandle = CreateFile(
         "\\\\.\\MyIoctlSymLink",
         GENERIC_READ | GENERIC_WRITE,

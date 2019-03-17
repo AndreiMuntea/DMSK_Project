@@ -1,0 +1,25 @@
+#ifndef __TRACE_H__ 
+#define __TRACE_H__
+
+// IoctlSecondDriverTraceGuid GUID provider: {9567F86C-BCDB-4F31-9119-1AE1089366D4}
+#define WPP_CONTROL_GUIDS \
+    WPP_DEFINE_CONTROL_GUID( \
+        IoctlSecondDriverTraceGuid, (9567F86C,BCDB,4F31,9119,1AE1089366D4),  \
+            WPP_DEFINE_BIT(TRACE_FLAG_IOCTL_SECOND_DRIVER)        /* bit  0 = 0x00000001 */ \
+    )
+
+#define WPP_LEVEL_FLAGS_LOGGER(level, flags) WPP_LEVEL_LOGGER(flags)
+#define WPP_LEVEL_FLAGS_ENABLED(level, flags) (WPP_LEVEL_ENABLED(flags) && WPP_CONTROL(WPP_BIT_ ## flags).Level >= level)
+
+// begin_wpp config
+//
+// FUNC IoctlSecondDriverLogTrace{LEVEL=TRACE_LEVEL_VERBOSE, FLAGS=TRACE_FLAG_IOCTL_SECOND_DRIVER} (MSG, ...);
+// FUNC IoctlSecondDriverLogInfo{LEVEL=TRACE_LEVEL_INFORMATION, FLAGS=TRACE_FLAG_IOCTL_SECOND_DRIVER}(MSG, ...);
+// FUNC IoctlSecondDriverLogWarning{LEVEL=TRACE_LEVEL_WARNING, FLAGS=TRACE_FLAG_IOCTL_SECOND_DRIVER}(MSG, ...);
+// FUNC IoctlSecondDriverLogError{LEVEL=TRACE_LEVEL_ERROR, FLAGS=TRACE_FLAG_IOCTL_SECOND_DRIVER}(MSG, ...);
+// FUNC IoctlSecondDriverLogCritical{LEVEL=TRACE_LEVEL_CRITICAL, FLAGS=TRACE_FLAG_IOCTL_SECOND_DRIVER}(MSG, ...);
+//
+// end_wpp
+//
+
+#endif //__TRACE_H__

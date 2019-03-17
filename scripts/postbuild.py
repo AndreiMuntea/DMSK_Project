@@ -25,7 +25,7 @@ def CopyProjectFiles(Platform, Configuration, OutDir, ProjectName, BinPath):
     project_pdb = ProjectName + '.pdb'
     project_out = ProjectName + '.exe'
     
-    if ProjectName in ['IOCTLFirstDriver']:
+    if ProjectName in ['IOCTLFirstDriver', 'IOCTLSecondDriver']:
         project_out = ProjectName + '.sys'
 
     pdb_src = os.path.join(OutDir, project_pdb)
