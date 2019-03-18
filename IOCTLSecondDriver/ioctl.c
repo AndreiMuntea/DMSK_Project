@@ -6,6 +6,14 @@ static UNICODE_STRING gDeviceName = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDevic
 
 static PDEVICE_OBJECT gDeviceObject = NULL;
 
+#define IO_REMOVE_LOCK_ALLOC_TAG    'TLR#'  // #RLT - Remove Lock Tag
+
+static __forceinline PIO_REMOVE_LOCK
+IoctlGetIoRemoveLock()
+{
+    return gDeviceObject->DeviceExtension;
+}
+
 
 _Use_decl_annotations_
 NTSTATUS
@@ -18,7 +26,7 @@ IoctlInitDeviceObject(
     IoctlSecondDriverLogInfo("Will create a device with name %wZ", &gDeviceName);
     status = IoCreateDevice(
         DriverObject,                   // Driver object
-        0,                              // Device extension size
+        sizeof(IO_REMOVE_LOCK),         // Device extension size
         &gDeviceName,                   // Device name
         FILE_DEVICE_UNKNOWN,            // Device type
         FILE_DEVICE_SECURE_OPEN,        // Device characteristics
@@ -32,12 +40,17 @@ IoctlInitDeviceObject(
         return status;
     }
 
+    IoInitializeRemoveLock(IoctlGetIoRemoveLock(), IO_REMOVE_LOCK_ALLOC_TAG, 0, 0);
+
     return status;
 }
 
 VOID
 IoctlUninitDeviceObject()
 {
+    IoAcquireRemoveLock(IoctlGetIoRemoveLock(), NULL);
+    IoReleaseRemoveLockAndWait(IoctlGetIoRemoveLock(), NULL);
+
     IoctlSecondDriverLogInfo("Uninit IoctlDeviceObject");
     if (gDeviceObject)
     {
@@ -56,6 +69,7 @@ IoctlHandleIrpMjDeviceControl(
     UNREFERENCED_PARAMETER(DeviceObject);
     IoctlSecondDriverLogInfo("IoctlHandleIrpMjDeviceControl was called");
 
+    IoAcquireRemoveLock(IoctlGetIoRemoveLock(), Irp);
     PIO_STACK_LOCATION irpSp = IoGetCurrentIrpStackLocation(Irp);
     NTSTATUS status = STATUS_SUCCESS;
 
@@ -77,6 +91,7 @@ IoctlHandleIrpMjDeviceControl(
     Irp->IoStatus.Information = 0;
 
     IoCompleteRequest(Irp, IO_NO_INCREMENT);
+    IoReleaseRemoveLock(IoctlGetIoRemoveLock(), Irp);
 
     return status;
 }
@@ -90,11 +105,13 @@ IoctlHandleIrpMjCreate(
 {
     UNREFERENCED_PARAMETER(DeviceObject);
     IoctlSecondDriverLogInfo("IoctlHandleIrpMjCreate was called");
+    IoAcquireRemoveLock(IoctlGetIoRemoveLock(), Irp);
 
     Irp->IoStatus.Status = STATUS_SUCCESS;
     Irp->IoStatus.Information = 0;
 
     IoCompleteRequest(Irp, IO_NO_INCREMENT);
+    IoReleaseRemoveLock(IoctlGetIoRemoveLock(), Irp);
 
     return STATUS_SUCCESS;
 }
@@ -108,11 +125,13 @@ IoctlHandleIrpMjClose(
 {
     UNREFERENCED_PARAMETER(DeviceObject);
     IoctlSecondDriverLogInfo("IoctlHandleIrpMjClose was called");
+    IoAcquireRemoveLock(IoctlGetIoRemoveLock(), Irp);
 
     Irp->IoStatus.Status = STATUS_SUCCESS;
     Irp->IoStatus.Information = 0;
 
     IoCompleteRequest(Irp, IO_NO_INCREMENT);
+    IoReleaseRemoveLock(IoctlGetIoRemoveLock(), Irp);
 
     return STATUS_SUCCESS;
 }
