@@ -8,7 +8,8 @@
 
 #define TERMINATE_ACCESS_RIGHT  0x0001
 
-void FltpHandleProcessCreate(
+void 
+FltpHandleProcessCreate(
     _Inout_ PEPROCESS Process,
     _In_ HANDLE ProcessId,
     _In_ PPS_CREATE_NOTIFY_INFO CreateInfo
@@ -24,7 +25,8 @@ void FltpHandleProcessCreate(
     );
 }
 
-void FltpHandleProcessTerminate(
+void 
+FltpHandleProcessTerminate(
     _Inout_ PEPROCESS Process,
     _In_ HANDLE ProcessId
 )
@@ -38,7 +40,6 @@ void FltpHandleProcessTerminate(
     );
 }
 
-
 void 
 FltCreateProcessNotifyRoutine(
     _Inout_ PEPROCESS Process,
@@ -48,6 +49,43 @@ FltCreateProcessNotifyRoutine(
 {
     (CreateInfo != nullptr) ? FltpHandleProcessCreate(Process, ProcessId, CreateInfo)
                             : FltpHandleProcessTerminate(Process, ProcessId);
+}
+
+void 
+FltpHandleThreadCreate(
+    _In_ HANDLE ProcessId,
+    _In_ HANDLE ThreadId
+)
+{
+    MyDriverLogInfo(
+        "[Thread Created] [PID] = %d  [TID] = %d",
+        (unsigned __int32)(SIZE_T)ProcessId,
+        (unsigned __int32)(SIZE_T)ThreadId
+    );
+}
+
+void 
+FltpHandleThreadTerminate(
+    _In_ HANDLE ProcessId,
+    _In_ HANDLE ThreadId
+)
+{
+    MyDriverLogInfo(
+        "[Thread Terminated] [PID] = %d  [TID] = %d",
+        (unsigned __int32)(SIZE_T)ProcessId,
+        (unsigned __int32)(SIZE_T)ThreadId
+    );
+}
+
+void 
+FltCreateThreadNotifyRoutine(
+    _In_ HANDLE ProcessId,
+    _In_ HANDLE ThreadId,
+    _In_ BOOLEAN Create
+)
+{
+    (Create) ? FltpHandleThreadCreate(ProcessId, ThreadId)
+             : FltpHandleThreadTerminate(ProcessId, ThreadId);
 }
 
 NTSTATUS 
@@ -132,7 +170,7 @@ FltPreProcessCreateRoutine(
         return OB_PREOP_SUCCESS;
     }
 
-    LockGuard guard(&gDrvData.Lock);
+    ExclusiveLockguard guard(&gDrvData.Lock);
 
     // No pid set
     if (gDrvData.ProtectedProcessPid == 0)

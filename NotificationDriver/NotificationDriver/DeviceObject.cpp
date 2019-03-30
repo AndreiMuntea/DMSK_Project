@@ -83,7 +83,7 @@ DeviceObject::HandleProtectProcess(
         return STATUS_INVALID_BUFFER_SIZE;
     }
 
-    LockGuard guard(&gDrvData.Lock);
+    ExclusiveLockguard guard(&gDrvData.Lock);
 
     gDrvData.ProtectedProcessPid = *(unsigned __int32*)(Irp->AssociatedIrp.SystemBuffer);
     MyDriverLogTrace("Protecting process with pid: %d", gDrvData.ProtectedProcessPid);

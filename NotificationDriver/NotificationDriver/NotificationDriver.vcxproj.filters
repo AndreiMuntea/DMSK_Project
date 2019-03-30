@@ -23,6 +23,12 @@
     <Filter Include="Source Files\cpp">
       <UniqueIdentifier>{8aa29daf-5ccc-420c-81d5-0adbca4d5581}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data Structures">
+      <UniqueIdentifier>{312016b4-8b21-4175-b573-688d1cd3f9df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\definitions">
+      <UniqueIdentifier>{2eeddef3-2b3f-4620-896b-6f71dbd0a037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpp_crt_data_section.hpp">
@@ -37,9 +43,6 @@
     <ClInclude Include="cpp_object.hpp">
       <Filter>Header Files\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="trace.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Filter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,17 +52,20 @@
     <ClInclude Include="DeviceObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DriverTags.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Lock.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Data Structures</Filter>
     </ClInclude>
     <ClInclude Include="Lockguard.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="trace.hpp">
+      <Filter>Header Files\definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.hpp">
+      <Filter>Header Files\definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverTags.hpp">
+      <Filter>Header Files\definitions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

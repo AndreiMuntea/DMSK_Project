@@ -3,15 +3,15 @@
 
 #include "Lock.hpp"
 
-class LockGuard : public CppNonPagedObject<DRV_TAG_GLT>
+class ExclusiveLockguard : public CppNonPagedObject<DRV_TAG_GLT>
 {
 public:
-    explicit LockGuard(Lock* Mutex) : mutex{ Mutex }
+    explicit ExclusiveLockguard(Lock* Mutex) : mutex{ Mutex }
     {
         this->mutex->Acquire();
     }
 
-    virtual ~LockGuard()
+    virtual ~ExclusiveLockguard()
     {
         this->mutex->Release();
     }

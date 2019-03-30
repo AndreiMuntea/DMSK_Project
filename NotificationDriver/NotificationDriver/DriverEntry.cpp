@@ -27,7 +27,6 @@ DriverEntry(
     GdrvInitGlobalData(DriverObject);
 
     DriverObject->DriverUnload = DriverUnload;
-
     DriverObject->MajorFunction[IRP_MJ_CREATE] = DeviceObject::IoctlHandleIrpMjCreate;
     DriverObject->MajorFunction[IRP_MJ_CLOSE] = DeviceObject::IoctlHandleIrpMjClose;
     DriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = DeviceObject::IoctlHandleIrpMjDeviceControl;
@@ -43,6 +42,9 @@ DriverEntry(
     NT_ASSERT(NT_SUCCESS(status));
 
     status = ObRegisterCallbacks(&gDrvData.ObCallbackRegistration, &gDrvData.RegistrationHandle);
+    NT_ASSERT(NT_SUCCESS(status));
+
+    status = PsSetCreateThreadNotifyRoutine(FltCreateThreadNotifyRoutine);
     NT_ASSERT(NT_SUCCESS(status));
 
     return STATUS_SUCCESS;
@@ -62,6 +64,9 @@ DriverUnload(
     NT_ASSERT(NT_SUCCESS(status));
 
     status = PsRemoveLoadImageNotifyRoutine(FltLoadImageNotifyRoutine);
+    NT_ASSERT(NT_SUCCESS(status));
+
+    status = PsRemoveCreateThreadNotifyRoutine(FltCreateThreadNotifyRoutine);
     NT_ASSERT(NT_SUCCESS(status));
 
     ObUnRegisterCallbacks(gDrvData.RegistrationHandle);

@@ -10,6 +10,12 @@ FltCreateProcessNotifyRoutine(
     _Inout_opt_ PPS_CREATE_NOTIFY_INFO CreateInfo
 );
 
+void
+FltCreateThreadNotifyRoutine(
+    _In_ HANDLE ProcessId,
+    _In_ HANDLE ThreadId,
+    _In_ BOOLEAN Create
+);
 
 NTSTATUS
 FltRegistryNotifyRoutine(
