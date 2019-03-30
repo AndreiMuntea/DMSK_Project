@@ -22,6 +22,8 @@ private:
     void StartThreadPoolCommand();
     void StopThreadPoolCommand();
 
+    void ProtectProcessCommand();
+
     std::unordered_map<std::string, Command> availableCommands;
 };
 

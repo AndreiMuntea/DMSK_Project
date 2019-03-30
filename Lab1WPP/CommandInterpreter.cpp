@@ -49,13 +49,19 @@ CommandInterpreter::CommandInterpreter()
     availableCommands.emplace(
         std::piecewise_construct,
         std::make_tuple("SendFirstIoctl"),
-        std::make_tuple("Sends first ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(FIRST_IOCTL_CODE)); })
+        std::make_tuple("Sends first ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(FIRST_IOCTL_CODE), nullptr, 0); })
     );
 
     availableCommands.emplace(
         std::piecewise_construct,
         std::make_tuple("SendSecondIoctl"),
-        std::make_tuple("Sends second ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(SECOND_IOCTL_CODE)); })
+        std::make_tuple("Sends second ioctl code to the driver", []() {IoctlSendIoctl((DWORD)(SECOND_IOCTL_CODE), nullptr, 0); })
+    );
+
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("ProtectProcess"),
+        std::make_tuple("Protects a process with custom pid", [this]() {this->ProtectProcessCommand(); })
     );
 
     availableCommands.emplace(
@@ -138,4 +144,15 @@ CommandInterpreter::StopThreadPoolCommand()
 
     gGlobalData.ThreadPool->Shutdown();
     gGlobalData.ThreadPool = nullptr;
+}
+
+void 
+CommandInterpreter::ProtectProcessCommand()
+{
+    unsigned __int32 pid = 0;
+
+    std::cout << "Enter process pid: ";
+    std::cin >> pid;
+
+    IoctlSendIoctl((DWORD)THIRD_IOCTL_CODE, &pid, sizeof(unsigned __int32));
 }

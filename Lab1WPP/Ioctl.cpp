@@ -7,7 +7,9 @@
 
 void 
 IoctlSendIoctl(
-    _In_ DWORD IoctlCode
+    _In_ DWORD IoctlCode,
+    _In_ LPVOID InputBuffer,
+    _In_ DWORD InputBufferSize
 )
 {
     auto deviceHandle = CreateFile(
@@ -28,7 +30,7 @@ IoctlSendIoctl(
     }
 
     DWORD noBytes = 0;
-    auto res = DeviceIoControl(deviceHandle, IoctlCode, nullptr, 0, nullptr, 0, &noBytes, nullptr);
+    auto res = DeviceIoControl(deviceHandle, IoctlCode, InputBuffer, InputBufferSize, nullptr, 0, &noBytes, nullptr);
     if (!res)
     {
         std::wcout << "DeviceIoControl failed! GLE=" << GetLastError() << std::endl;
