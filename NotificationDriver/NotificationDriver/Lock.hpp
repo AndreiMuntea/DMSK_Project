@@ -15,6 +15,15 @@ public:
     virtual void Release() = 0;
 };
 
+class SharedLock : public Lock
+{
+public:
+    SharedLock() = default;
+    virtual ~SharedLock() = default;
+
+    virtual void AcquireShared() = 0;
+    virtual void ReleaseShared() = 0;
+};
 
 class Spinlock : public Lock
 {
@@ -46,7 +55,7 @@ private:
 };
 
 
-class Pushlock : public Lock
+class Pushlock : public SharedLock
 {
 public:
     Pushlock()
@@ -67,6 +76,16 @@ public:
     }
 
     virtual void Release() override
+    {
+        FltReleasePushLock(&lock);
+    }
+
+    virtual void AcquireShared() override
+    {
+        FltAcquirePushLockShared(&lock);
+    }
+
+    virtual void ReleaseShared() override
     {
         FltReleasePushLock(&lock);
     }

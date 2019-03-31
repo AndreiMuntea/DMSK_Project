@@ -227,8 +227,13 @@
     <ClInclude Include="Filter.hpp" />
     <ClInclude Include="GlobalData.hpp" />
     <ClInclude Include="includes.hpp" />
+    <ClInclude Include="LinkedList.hpp" />
     <ClInclude Include="Lock.hpp" />
     <ClInclude Include="Lockguard.hpp" />
+    <ClInclude Include="Module.hpp" />
+    <ClInclude Include="Process.hpp" />
+    <ClInclude Include="ProcessCollector.hpp" />
+    <ClInclude Include="SmartPointer.hpp" />
     <ClInclude Include="trace.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +243,9 @@
     <ClCompile Include="DriverEntry.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="ProcessCollector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

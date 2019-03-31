@@ -20,4 +20,21 @@ private:
     Lock* mutex;
 };
 
+class SharedLockguard : public CppNonPagedObject<DRV_TAG_GLT>
+{
+public:
+    explicit SharedLockguard(SharedLock* Mutex) : mutex{ Mutex }
+    {
+        this->mutex->AcquireShared();
+    }
+
+    virtual ~SharedLockguard()
+    {
+        this->mutex->ReleaseShared();
+    }
+
+private:
+    SharedLock* mutex;
+};
+
 #endif //__LOCKGUARD_HPP__

@@ -3,7 +3,7 @@
 
 #include "includes.hpp"
 #include "DeviceObject.hpp"
-#include "Lock.hpp"
+#include "ProcessCollector.hpp"
 
 typedef struct _GLOBAL_DATA
 {
@@ -16,6 +16,8 @@ typedef struct _GLOBAL_DATA
 
     Pushlock Lock;
     unsigned __int32 ProtectedProcessPid;
+
+    ProcessCollector ProcessCollector;
 }GLOBAL_DATA, *PGLOBAL_DATA;
 
 extern GLOBAL_DATA gDrvData;

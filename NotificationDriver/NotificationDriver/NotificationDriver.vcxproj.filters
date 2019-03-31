@@ -29,6 +29,12 @@
     <Filter Include="Header Files\definitions">
       <UniqueIdentifier>{2eeddef3-2b3f-4620-896b-6f71dbd0a037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Process filter">
+      <UniqueIdentifier>{4eb98eaa-9962-4034-ae48-0ea692562c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProcessFilter">
+      <UniqueIdentifier>{57478e6c-a3e4-4c0d-b644-79e342e2ef0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpp_crt_data_section.hpp">
@@ -67,6 +73,21 @@
     <ClInclude Include="DriverTags.hpp">
       <Filter>Header Files\definitions</Filter>
     </ClInclude>
+    <ClInclude Include="Process.hpp">
+      <Filter>Header Files\Process filter</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.hpp">
+      <Filter>Header Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointer.hpp">
+      <Filter>Header Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessCollector.hpp">
+      <Filter>Header Files\Process filter</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.hpp">
+      <Filter>Header Files\Process filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp_crt_data_section.cpp">
@@ -86,6 +107,15 @@
     </ClCompile>
     <ClCompile Include="DeviceObject.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessCollector.cpp">
+      <Filter>Source Files\ProcessFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.cpp">
+      <Filter>Source Files\ProcessFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Module.cpp">
+      <Filter>Source Files\ProcessFilter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

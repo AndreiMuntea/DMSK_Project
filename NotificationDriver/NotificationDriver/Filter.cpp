@@ -23,6 +23,8 @@ FltpHandleProcessCreate(
         CreateInfo->ImageFileName,
         CreateInfo->CommandLine
     );
+
+    gDrvData.ProcessCollector.InsertProcess(ProcessId);
 }
 
 void 
@@ -38,6 +40,9 @@ FltpHandleProcessTerminate(
         "[Process terminated] [PID] = %d",
         (unsigned __int32)(SIZE_T)ProcessId
     );
+
+
+    gDrvData.ProcessCollector.TerminateProcess(ProcessId);
 }
 
 void 
@@ -131,11 +136,12 @@ FltLoadImageNotifyRoutine(
     _In_ PIMAGE_INFO ImageInfo
 )
 {
-    UNREFERENCED_PARAMETER(ProcessId);
     if (ImageInfo->SystemModeImage)
     {
         MyDriverLogInfo("Driver image loaded %wZ", FullImageName);
     }
+
+    gDrvData.ProcessCollector.InsertModuleForProcess(ProcessId, FullImageName, ImageInfo->ImageBase, ImageInfo->ImageSize);
 }
 
 OB_PREOP_CALLBACK_STATUS

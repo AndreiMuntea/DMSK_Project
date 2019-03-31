@@ -8,5 +8,8 @@
 #define DRV_TAG_TPT 'TPT#'   // #TPT - ThreadPool Tag
 #define DRV_TAG_GLT 'TLG#'   // #GLT - Guard Lock Tag
 #define DRV_TAG_TTT 'TTT#'   // #TTT - Test Threadpool Tag
+#define DRV_TAG_PST 'TSP#'   // #PST - Process Structure Tag
+#define DRV_TAG_IST 'TSI#'   // #IST - Image Structure Tag
+#define DRV_TAG_UST 'TSU#'   // #UST - Unicode String Tag
 
 #endif //__DRIVER_TAGS_HPP__
