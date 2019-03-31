@@ -7,8 +7,7 @@
 #include "Lock.hpp"
 #include "Module.hpp"
 
-class Process : public LinkedListEntry,
-                public CppPagedObject<DRV_TAG_PST>
+class Process : public LinkedListEntry
 {
 public:
     Process(_In_ HANDLE Pid) : Pid{ Pid } {}

@@ -5,8 +5,7 @@
 #include "DriverTags.hpp"
 #include "LinkedList.hpp"
 
-class Module : public LinkedListEntry,
-               public CppPagedObject<DRV_TAG_IST>
+class Module : public LinkedListEntry
 {
 public:
     Module(
