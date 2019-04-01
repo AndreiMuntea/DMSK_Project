@@ -64,9 +64,6 @@
     <ClInclude Include="Lockguard.hpp">
       <Filter>Header Files\Data Structures</Filter>
     </ClInclude>
-    <ClInclude Include="trace.hpp">
-      <Filter>Header Files\definitions</Filter>
-    </ClInclude>
     <ClInclude Include="includes.hpp">
       <Filter>Header Files\definitions</Filter>
     </ClInclude>
@@ -79,13 +76,16 @@
     <ClInclude Include="LinkedList.hpp">
       <Filter>Header Files\Data Structures</Filter>
     </ClInclude>
-    <ClInclude Include="SmartPointer.hpp">
-      <Filter>Header Files\Data Structures</Filter>
-    </ClInclude>
     <ClInclude Include="ProcessCollector.hpp">
       <Filter>Header Files\Process filter</Filter>
     </ClInclude>
-    <ClInclude Include="Module.hpp">
+    <ClInclude Include="trace.hpp">
+      <Filter>Header Files\definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadFilter.hpp">
+      <Filter>Header Files\Process filter</Filter>
+    </ClInclude>
+    <ClInclude Include="StackTrace.hpp">
       <Filter>Header Files\Process filter</Filter>
     </ClInclude>
   </ItemGroup>
@@ -111,10 +111,7 @@
     <ClCompile Include="ProcessCollector.cpp">
       <Filter>Source Files\ProcessFilter</Filter>
     </ClCompile>
-    <ClCompile Include="Process.cpp">
-      <Filter>Source Files\ProcessFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="Module.cpp">
+    <ClCompile Include="StackTrace.cpp">
       <Filter>Source Files\ProcessFilter</Filter>
     </ClCompile>
   </ItemGroup>

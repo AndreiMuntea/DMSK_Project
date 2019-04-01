@@ -22,13 +22,6 @@ public:
         _In_ HANDLE Pid
     );
 
-    void InsertModuleForProcess(
-        _In_ HANDLE Pid,
-        _In_ PUNICODE_STRING ImageName,
-        _In_ PVOID ImageBase,
-        _In_ SIZE_T ImageSize
-    );
-
 private:
 
     Process* FindProcessUnsafe(

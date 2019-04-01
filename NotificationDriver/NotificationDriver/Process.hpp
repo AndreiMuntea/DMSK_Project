@@ -5,34 +5,21 @@
 #include "DriverTags.hpp"
 #include "LinkedList.hpp"
 #include "Lock.hpp"
-#include "Module.hpp"
 
 class Process : public LinkedListEntry
 {
 public:
-    Process(_In_ HANDLE Pid) : Pid{ Pid } {}
-    virtual ~Process();
+    Process(_In_ HANDLE Pid) : pid{ Pid } {}
+    virtual ~Process() = default;
 
-    HANDLE GetPid() const { return Pid; }
-
-    void InsertModule(
-        _In_ PUNICODE_STRING ImageName,
-        _In_ PVOID ImageBase,
-        _In_ SIZE_T ImageSize
-    );
-
-    Module* FindModule(
-        _In_ PVOID Address
-    );
+    inline HANDLE GetPid() const { return pid; }
+    
+    inline bool WasMainThreadCreated() const { return wasMainThreadCreated; }
+    inline void SetMainThreadCreated() { wasMainThreadCreated = true; }
 
 private:
-    Module* FindModuleUnsafe(
-        _In_ PVOID Address
-    );
-
-    HANDLE Pid = 0;
-    Pushlock Lock;
-    LinkedList<Module> Modules;
+    bool wasMainThreadCreated = false;
+    HANDLE pid = 0;
 };
 
 #endif //__PROCESS_HPP__

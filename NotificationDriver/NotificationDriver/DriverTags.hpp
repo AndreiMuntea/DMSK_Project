@@ -11,5 +11,7 @@
 #define DRV_TAG_PST 'TSP#'   // #PST - Process Structure Tag
 #define DRV_TAG_IST 'TSI#'   // #IST - Image Structure Tag
 #define DRV_TAG_UST 'TSU#'   // #UST - Unicode String Tag
+#define DRV_TAG_MST 'TSM#'   // #MST - Module Structure Tag
+#define DRV_TAG_STT 'TSS#'   // #STT - Stack Trace Tag
 
 #endif //__DRIVER_TAGS_HPP__

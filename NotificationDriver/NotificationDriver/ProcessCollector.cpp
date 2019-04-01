@@ -44,21 +44,6 @@ Process* ProcessCollector::GetProcess(
     return FindProcessUnsafe(Pid);
 }
 
-void ProcessCollector::InsertModuleForProcess(
-    _In_ HANDLE Pid,
-    _In_ PUNICODE_STRING ImageName,
-    _In_ PVOID ImageBase,
-    _In_ SIZE_T ImageSize
-)
-{
-    SharedLockguard guard(&lock);
-    auto process = FindProcessUnsafe(Pid);
-    if (process)
-    {
-        process->InsertModule(ImageName, ImageBase, ImageSize);
-    }
-}
-
 Process* ProcessCollector::FindProcessUnsafe(
     _In_ HANDLE Pid
 )

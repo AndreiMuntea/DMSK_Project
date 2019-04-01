@@ -18,6 +18,9 @@ typedef struct _GLOBAL_DATA
     unsigned __int32 ProtectedProcessPid;
 
     ProcessCollector ProcessCollector;
+
+    PVOID NtBaseAddress;
+    SIZE_T NtModuleSize;
 }GLOBAL_DATA, *PGLOBAL_DATA;
 
 extern GLOBAL_DATA gDrvData;

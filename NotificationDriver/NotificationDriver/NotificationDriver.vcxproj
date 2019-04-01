@@ -140,7 +140,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -150,7 +150,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -170,7 +170,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -180,7 +180,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -190,7 +190,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -200,7 +200,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -210,7 +210,7 @@
       <WppScanConfigurationData>$(ProjectDir)\trace.hpp</WppScanConfigurationData>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(KernelBufferOverflowLib);$(DDK_LIB_PATH)ntoskrnl.lib;$(DDK_LIB_PATH)hal.lib;$(DDK_LIB_PATH)wmilib.lib;fltmgr.lib;Aux_Klib.lib</AdditionalDependencies>
       <AdditionalOptions>/IntegrityCheck %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -230,10 +230,10 @@
     <ClInclude Include="LinkedList.hpp" />
     <ClInclude Include="Lock.hpp" />
     <ClInclude Include="Lockguard.hpp" />
-    <ClInclude Include="Module.hpp" />
     <ClInclude Include="Process.hpp" />
     <ClInclude Include="ProcessCollector.hpp" />
-    <ClInclude Include="SmartPointer.hpp" />
+    <ClInclude Include="StackTrace.hpp" />
+    <ClInclude Include="ThreadFilter.hpp" />
     <ClInclude Include="trace.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -243,9 +243,8 @@
     <ClCompile Include="DriverEntry.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="GlobalData.cpp" />
-    <ClCompile Include="Module.cpp" />
-    <ClCompile Include="Process.cpp" />
     <ClCompile Include="ProcessCollector.cpp" />
+    <ClCompile Include="StackTrace.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,7 @@
 
 #include "GlobalData.hpp"
 #include "Lockguard.hpp"
+#include "StackTrace.hpp"
 
 #define TERMINATE_ACCESS_RIGHT  0x0001
 
@@ -62,11 +63,32 @@ FltpHandleThreadCreate(
     _In_ HANDLE ThreadId
 )
 {
-    MyDriverLogInfo(
-        "[Thread Created] [PID] = %d  [TID] = %d",
-        (unsigned __int32)(SIZE_T)ProcessId,
-        (unsigned __int32)(SIZE_T)ThreadId
-    );
+    UNREFERENCED_PARAMETER(ThreadId);
+    UNREFERENCED_PARAMETER(ProcessId);
+
+    StackTrace stacktrace;
+
+    __debugbreak();
+    stacktrace.PrintNtStackTrace();
+
+    //if (PsGetCurrentProcessId() == ProcessId)
+    //{
+    //    return;
+    //}
+
+    //auto process = gDrvData.ProcessCollector.GetProcess(ProcessId);
+    //
+    //// Remote thread
+    //if (process->WasMainThreadCreated())
+    //{
+
+    //}
+    //else
+    //{
+    //    // Need to check for hollow as well;
+    //    process->SetMainThreadCreated();
+    //}
+
 }
 
 void 
@@ -136,12 +158,12 @@ FltLoadImageNotifyRoutine(
     _In_ PIMAGE_INFO ImageInfo
 )
 {
+    UNREFERENCED_PARAMETER(ProcessId);
+
     if (ImageInfo->SystemModeImage)
     {
         MyDriverLogInfo("Driver image loaded %wZ", FullImageName);
     }
-
-    gDrvData.ProcessCollector.InsertModuleForProcess(ProcessId, FullImageName, ImageInfo->ImageBase, ImageInfo->ImageSize);
 }
 
 OB_PREOP_CALLBACK_STATUS

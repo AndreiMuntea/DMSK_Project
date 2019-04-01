@@ -1,13 +1,83 @@
 #include "GlobalData.hpp"
 #include "Filter.hpp"
+#include "DriverTags.hpp"
+
+#include <aux_klib.h>
 
 static UNICODE_STRING gDeviceName = RTL_CONSTANT_STRING(L"\\Device\\MyIoctlDeviceName");
 static UNICODE_STRING gSymLink = RTL_CONSTANT_STRING(L"\\DosDevices\\MyIoctlSymLink");
+static UNICODE_STRING gNtoskrnl = RTL_CONSTANT_STRING(L"\\SystemRoot\\system32\\ntoskrnl.exe");
+
 
 GLOBAL_DATA gDrvData;
 
+NTSTATUS GdrvpInitializeNtImageBase()
+{
+    AUX_MODULE_EXTENDED_INFO* modules = nullptr;
+    ULONG modulesSize = 0;
+    NTSTATUS status = STATUS_UNSUCCESSFUL;
+
+    status = AuxKlibInitialize();
+    if (!NT_SUCCESS(status))
+    {
+        return status;
+    }
+
+    while (!modules)
+    {
+        status = AuxKlibQueryModuleInformation(&modulesSize, sizeof(AUX_MODULE_EXTENDED_INFO), nullptr);
+        if (!NT_SUCCESS(status))
+        {
+            return status;
+        }
+
+        modules = (AUX_MODULE_EXTENDED_INFO*)ExAllocatePoolWithTag(NonPagedPool, modulesSize, DRV_TAG_MST);
+        if (!modules)
+        {
+            return STATUS_INSUFFICIENT_RESOURCES;
+        }
+
+        status = AuxKlibQueryModuleInformation(&modulesSize, sizeof(AUX_MODULE_EXTENDED_INFO), modules);
+        if (!NT_SUCCESS(status))
+        {
+            ExFreePoolWithTag(modules, DRV_TAG_MST);
+            modules = nullptr;
+        }
+    }
+
+    for (int i = 0; i < modulesSize / sizeof(AUX_MODULE_EXTENDED_INFO); ++i)
+    {
+        bool ok = true;
+
+        // FullPathName is a static buffer or 256 UCHARs => ntoskrnl.exe size is lower;
+        for (USHORT idx = 0; idx < gNtoskrnl.Length / 2 && ok; ++idx)
+        {
+            auto c1 = RtlDowncaseUnicodeChar(gNtoskrnl.Buffer[idx]);
+            auto c2 = RtlDowncaseUnicodeChar(modules[i].FullPathName[idx]);
+            ok = (c1 == c2);
+        }
+        if (ok)
+        {
+            gDrvData.NtBaseAddress = modules[i].BasicInfo.ImageBase;
+            gDrvData.NtModuleSize = modules[i].ImageSize;
+            break;
+        }
+    }
+
+    if (!gDrvData.NtBaseAddress)
+    {
+        status = STATUS_NOT_FOUND;
+    }
+
+    ExFreePoolWithTag(modules, DRV_TAG_MST);
+    return status;
+}
+
 void GdrvInitGlobalData(_In_ PDRIVER_OBJECT DriverObject)
 {
+    gDrvData.NtBaseAddress = nullptr;
+    gDrvData.NtModuleSize = 0;
+
     gDrvData.Cookie = { 0 };
     gDrvData.Altitude = RTL_CONSTANT_STRING(L"320007");
     gDrvData.RegistrationHandle = nullptr;
@@ -31,6 +101,8 @@ void GdrvInitGlobalData(_In_ PDRIVER_OBJECT DriverObject)
 
     gDrvData.DeviceObject = new DeviceObject(DriverObject, &gDeviceName, &gSymLink);
     NT_ASSERT(gDrvData.DeviceObject && gDrvData.DeviceObject->IsValid());
+
+    NT_VERIFY(NT_SUCCESS(GdrvpInitializeNtImageBase()));
 }
 
 void GdrvUninitGlobalData()
