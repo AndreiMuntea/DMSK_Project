@@ -1,6 +1,7 @@
 #include "GlobalData.hpp"
 #include "Filter.hpp"
 #include "DriverTags.hpp"
+#include "Lockguard.hpp"
 
 #include <aux_klib.h>
 
@@ -99,6 +100,8 @@ void GdrvInitGlobalData(_In_ PDRIVER_OBJECT DriverObject)
     gDrvData.ObCallbackRegistration.OperationRegistration = &gDrvData.ObOperationRegistration[0];
     gDrvData.ObCallbackRegistration.RegistrationContext = nullptr;
 
+    gDrvData.ProcessCreateGoodStackTrace = nullptr;
+
     gDrvData.DeviceObject = new DeviceObject(DriverObject, &gDeviceName, &gSymLink);
     NT_ASSERT(gDrvData.DeviceObject && gDrvData.DeviceObject->IsValid());
 
@@ -107,6 +110,8 @@ void GdrvInitGlobalData(_In_ PDRIVER_OBJECT DriverObject)
 
 void GdrvUninitGlobalData()
 {
+    ExclusiveLockguard guard(&gDrvData.Lock);
+
     gDrvData.Cookie = { 0 };
     gDrvData.Altitude = { 0,0,nullptr };
     gDrvData.RegistrationHandle = nullptr;
@@ -118,4 +123,10 @@ void GdrvUninitGlobalData()
     gDrvData.ObOperationRegistration[0] = { 0 };
     gDrvData.ObOperationRegistration[1] = { 0 };
     gDrvData.ObCallbackRegistration = { 0 };
+
+    if (gDrvData.ProcessCreateGoodStackTrace)
+    {
+        delete gDrvData.ProcessCreateGoodStackTrace;
+        gDrvData.ProcessCreateGoodStackTrace = nullptr;
+    }
 }

@@ -2,6 +2,7 @@
 #include "trace.hpp"
 #include "StackTrace.tmh"
 #include "includes.hpp"
+#include "GlobalData.hpp"
 
 StackTrace::StackTrace()
 {
@@ -55,7 +56,7 @@ void StackTrace::PrintNtStackTrace()
         tmp.MaximumLength -= 28;
     }
 
-    MyDriverLogTrace("Backtrace:\n %S", ustr.Buffer);
+    MyDriverLogTrace("Backtrace: %S", ustr.Buffer);
     ExFreePoolWithTag(buffer, DRV_TAG_UST);
 }
 
@@ -64,5 +65,26 @@ bool StackTrace::IsAddressInNtModule(PVOID Address) const
     return ((SIZE_T)Address > (SIZE_T)gDrvData.NtBaseAddress &&
             (SIZE_T)Address < (SIZE_T)gDrvData.NtBaseAddress + gDrvData.NtModuleSize);
 
+}
+
+bool StackTrace::AreNtTracesSame(const StackTrace& Other)
+{
+    // A filter may have been inserted above us, so the indexes could be displaced
+    // However number of calls from ntoskrnl should be the same
+    if (this->ntEndIdx - this->ntStartIdx + 1 != Other.ntEndIdx - Other.ntStartIdx + 1)
+    {
+        return false;
+    }
+
+    for (LONG i = this->ntStartIdx, j = Other.ntStartIdx; i < this->ntEndIdx; ++i, ++j)
+    {
+        // ntoskrnl should be mapped at the same address.
+        if ((SIZE_T)backtrace[i] != (SIZE_T)Other.backtrace[j])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 

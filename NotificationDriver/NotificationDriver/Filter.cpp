@@ -57,6 +57,15 @@ FltCreateProcessNotifyRoutine(
                             : FltpHandleProcessTerminate(Process, ProcessId);
 }
 
+void FltpCheckGlobalStackTrace()
+{
+    ExclusiveLockguard guard(&gDrvData.Lock);
+    if (!gDrvData.ProcessCreateGoodStackTrace)
+    {
+        gDrvData.ProcessCreateGoodStackTrace = new StackTrace();
+    }
+}
+
 void 
 FltpHandleThreadCreate(
     _In_ HANDLE ProcessId,
@@ -65,30 +74,48 @@ FltpHandleThreadCreate(
 {
     UNREFERENCED_PARAMETER(ThreadId);
     UNREFERENCED_PARAMETER(ProcessId);
+    
+    auto currentProcessPid = PsGetCurrentProcessId();
+
+    // Current process is creating a thread
+    if (currentProcessPid == ProcessId)
+    {
+        return;
+    }
+    
+    // Monitor only processes in collector
+    auto process = gDrvData.ProcessCollector.GetProcess(ProcessId);
+    if (!process)
+    {
+        return;
+    }
 
     StackTrace stacktrace;
 
-    __debugbreak();
-    stacktrace.PrintNtStackTrace();
+    // Trully a remote thread
+    if (process->WasMainThreadCreated())
+    {
+        MyDriverLogInfo("Process with Pid = %d Creates a remote thread in process with pid = %d", (ULONG)(SIZE_T)currentProcessPid, (ULONG)(SIZE_T)ProcessId);
+        stacktrace.PrintNtStackTrace();
+        return;
+    }
 
-    //if (PsGetCurrentProcessId() == ProcessId)
-    //{
-    //    return;
-    //}
+    // A simple solution to check for hollow.
+    // I consider that it is improbable that the first stack to be a hollow case 
+    // So the first stack will be considered "good" so we just compare if nt pointers are the same
+    FltpCheckGlobalStackTrace();
+    
+    if (!gDrvData.ProcessCreateGoodStackTrace)
+    {
+        return;
+    }
 
-    //auto process = gDrvData.ProcessCollector.GetProcess(ProcessId);
-    //
-    //// Remote thread
-    //if (process->WasMainThreadCreated())
-    //{
-
-    //}
-    //else
-    //{
-    //    // Need to check for hollow as well;
-    //    process->SetMainThreadCreated();
-    //}
-
+    // Check hollow case
+    if (!gDrvData.ProcessCreateGoodStackTrace->AreNtTracesSame(stacktrace))
+    {
+        MyDriverLogInfo("HOLLOW! Process with Pid = %d Creates a remote thread in process with pid = %d", (ULONG)(SIZE_T)currentProcessPid, (ULONG)(SIZE_T)ProcessId);
+        stacktrace.PrintNtStackTrace();
+    }
 }
 
 void 

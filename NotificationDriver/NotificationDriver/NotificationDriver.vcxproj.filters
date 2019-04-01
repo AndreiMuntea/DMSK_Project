@@ -82,9 +82,6 @@
     <ClInclude Include="trace.hpp">
       <Filter>Header Files\definitions</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadFilter.hpp">
-      <Filter>Header Files\Process filter</Filter>
-    </ClInclude>
     <ClInclude Include="StackTrace.hpp">
       <Filter>Header Files\Process filter</Filter>
     </ClInclude>

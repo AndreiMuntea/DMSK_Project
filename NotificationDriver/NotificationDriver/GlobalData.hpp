@@ -4,6 +4,7 @@
 #include "includes.hpp"
 #include "DeviceObject.hpp"
 #include "ProcessCollector.hpp"
+#include "StackTrace.hpp"
 
 typedef struct _GLOBAL_DATA
 {
@@ -16,6 +17,7 @@ typedef struct _GLOBAL_DATA
 
     Pushlock Lock;
     unsigned __int32 ProtectedProcessPid;
+    StackTrace* ProcessCreateGoodStackTrace;
 
     ProcessCollector ProcessCollector;
 

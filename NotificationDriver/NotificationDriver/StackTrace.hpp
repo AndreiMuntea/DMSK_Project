@@ -4,7 +4,6 @@
 #include "includes.hpp"
 #include "cpp_includes.hpp"
 #include "DriverTags.hpp"
-#include "GlobalData.hpp"
 
 class StackTrace : public CppPagedObject<DRV_TAG_STT>
 {
@@ -14,6 +13,7 @@ public:
 
     void PrintNtStackTrace();
     bool IsAddressInNtModule(PVOID Address) const;
+    bool AreNtTracesSame(const StackTrace& Other);
 
 private:
 

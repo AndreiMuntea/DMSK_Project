@@ -233,7 +233,6 @@
     <ClInclude Include="Process.hpp" />
     <ClInclude Include="ProcessCollector.hpp" />
     <ClInclude Include="StackTrace.hpp" />
-    <ClInclude Include="ThreadFilter.hpp" />
     <ClInclude Include="trace.hpp" />
   </ItemGroup>
   <ItemGroup>
