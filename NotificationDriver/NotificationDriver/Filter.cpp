@@ -57,7 +57,7 @@ FltCreateProcessNotifyRoutine(
                             : FltpHandleProcessTerminate(Process, ProcessId);
 }
 
-void FltpCheckGlobalStackTrace()
+void FltpCheckAndSetGlobalStackTrace()
 {
     ExclusiveLockguard guard(&gDrvData.Lock);
     if (!gDrvData.ProcessCreateGoodStackTrace)
@@ -104,7 +104,7 @@ FltpHandleThreadCreate(
     // A simple solution to check for hollow.
     // I consider that it is improbable that the first stack to be a hollow case 
     // So the first stack will be considered "good" so we just compare if nt pointers are the same
-    FltpCheckGlobalStackTrace();
+    FltpCheckAndSetGlobalStackTrace();
 
     if (!gDrvData.ProcessCreateGoodStackTrace)
     {
