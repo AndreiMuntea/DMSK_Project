@@ -83,7 +83,7 @@ FltpHandleThreadCreate(
         return;
     }
     
-    // Monitor only processes in collector
+    // Monitor only processes in collector (started after driver)
     auto process = gDrvData.ProcessCollector.GetProcess(ProcessId);
     if (!process)
     {
@@ -99,12 +99,13 @@ FltpHandleThreadCreate(
         stacktrace.PrintNtStackTrace();
         return;
     }
+    process->SetMainThreadCreated();
 
     // A simple solution to check for hollow.
     // I consider that it is improbable that the first stack to be a hollow case 
     // So the first stack will be considered "good" so we just compare if nt pointers are the same
     FltpCheckGlobalStackTrace();
-    
+
     if (!gDrvData.ProcessCreateGoodStackTrace)
     {
         return;
