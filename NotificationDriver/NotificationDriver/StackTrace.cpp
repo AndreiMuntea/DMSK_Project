@@ -25,6 +25,11 @@ StackTrace::StackTrace()
         }
     }
 
+    if (ntEndIdx == stackframes)
+    {
+        --ntEndIdx;
+    }
+
     // No nt 
     if (ntEndIdx < ntStartIdx)
     {
