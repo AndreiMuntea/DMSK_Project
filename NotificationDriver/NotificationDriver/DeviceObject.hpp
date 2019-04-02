@@ -22,18 +22,21 @@ public:
     virtual ~DeviceObject();
     inline bool IsValid() const { return isValid; };
 
+    _Dispatch_type_(IRP_MJ_CREATE)
     static NTSTATUS
     IoctlHandleIrpMjCreate(
         _Inout_ PDEVICE_OBJECT DeviceObject,
         _Inout_ PIRP Irp
     );
 
+    _Dispatch_type_(IRP_MJ_CLOSE)
     static NTSTATUS
     IoctlHandleIrpMjClose(
         _Inout_ PDEVICE_OBJECT DeviceObject,
         _Inout_ PIRP Irp
     );
 
+    _Dispatch_type_(IRP_MJ_DEVICE_CONTROL)
     static NTSTATUS 
     IoctlHandleIrpMjDeviceControl(
         _Inout_ PDEVICE_OBJECT DeviceObject,

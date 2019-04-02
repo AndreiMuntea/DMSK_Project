@@ -91,6 +91,7 @@ DeviceObject::HandleProtectProcess(
     return STATUS_SUCCESS;
 }
 
+_Use_decl_annotations_
 NTSTATUS
 DeviceObject::IoctlHandleIrpMjCreate(
     _Inout_ PDEVICE_OBJECT DeviceObject,
@@ -111,6 +112,7 @@ DeviceObject::IoctlHandleIrpMjCreate(
     return STATUS_SUCCESS;
 }
 
+_Use_decl_annotations_
 NTSTATUS
 DeviceObject::IoctlHandleIrpMjClose(
     _Inout_ PDEVICE_OBJECT DeviceObject,
@@ -130,6 +132,7 @@ DeviceObject::IoctlHandleIrpMjClose(
     return STATUS_SUCCESS;
 }
 
+_Use_decl_annotations_
 NTSTATUS
 DeviceObject::IoctlHandleIrpMjDeviceControl(
     _Inout_ PDEVICE_OBJECT DeviceObject,

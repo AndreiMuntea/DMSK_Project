@@ -59,6 +59,7 @@ NTSTATUS GdrvpInitializeNtImageBase()
         }
         if (ok)
         {
+#pragma warning(suppress: 6385)
             gDrvData.NtBaseAddress = modules[i].BasicInfo.ImageBase;
             gDrvData.NtModuleSize = modules[i].ImageSize;
             break;
