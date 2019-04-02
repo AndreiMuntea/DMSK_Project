@@ -76,7 +76,7 @@
       <Filter>Source Files\Ioctl</Filter>
     </ClCompile>
     <ClCompile Include="RemoteThread.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Remote Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

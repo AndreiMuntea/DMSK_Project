@@ -14,7 +14,20 @@ RmtpOpenCmd(
 )
 {
     LPWSTR path = L"c:\\Windows\\System32\\cmd.exe";
-    if (!CreateProcessW(path, nullptr, nullptr, nullptr, true, CREATE_NEW_CONSOLE, nullptr, nullptr, StartupInfo, ProcInfo))
+    auto res = CreateProcessW(
+        path,                   // lpApplicationName
+        nullptr,                // lpCommandLine
+        nullptr,                // lpProcessAttributes
+        nullptr,                // lpThreadAttributes
+        true,                   // bInheritHandles
+        CREATE_NEW_CONSOLE,     // dwCreationFlags
+        nullptr,                // lpEnvironment
+        nullptr,                // lpCurrentDirectory
+        StartupInfo,            // lpStartupInfo
+        ProcInfo                // lpProcessInformation
+    );
+
+    if (!res)
     {
         std::wcout << "RmtpOpenCmd failed! GLE=" << GetLastError() << std::endl;
         ConsoleAppLogError("RmtpOpenCmd failed with GLE=%d", GetLastError());
@@ -31,8 +44,19 @@ RmtpCreateRemoteThread(
     _Inout_ HANDLE* ThreadHandle
 )
 {
-    // Ntdll should be mapped at the same address. We already resolved some functions from ntdll. 
-    *ThreadHandle = CreateRemoteThread(ProcInfo->hProcess, nullptr, 0, (LPTHREAD_START_ROUTINE)gGlobalData.ZwQueryInformationProcess, nullptr, 0, nullptr);
+    // ntdll should be mapped at the same address. We already resolved some functions from ntdll.
+    LPTHREAD_START_ROUTINE startRoutine = (LPTHREAD_START_ROUTINE)gGlobalData.ZwQueryInformationProcess;
+ 
+    *ThreadHandle = CreateRemoteThread(
+        ProcInfo->hProcess, // hProcess
+        nullptr,            // lpThreadAttributes
+        0,                  // dwStackSize
+        startRoutine,       // lpStartAddress
+        nullptr,            // lpParameter
+        0,                  // dwCreationFlags
+        nullptr             // lpThreadId
+    );
+    
     if (*ThreadHandle)
     {
         std::wcout << "Created Remote thread" << std::endl;
