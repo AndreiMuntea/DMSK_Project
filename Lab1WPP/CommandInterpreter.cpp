@@ -4,6 +4,7 @@
 #include "GlobalData.hpp"
 #include "ProcessUtils.hpp"
 #include "Ioctl.hpp"
+#include "RemoteThread.hpp"
 
 #include <iostream>
 #include <functional>
@@ -62,6 +63,12 @@ CommandInterpreter::CommandInterpreter()
         std::piecewise_construct,
         std::make_tuple("ProtectProcess"),
         std::make_tuple("Protects a process with custom pid", [this]() {this->ProtectProcessCommand(); })
+    );    
+    
+    availableCommands.emplace(
+        std::piecewise_construct,
+        std::make_tuple("CreateRemoteThread"),
+        std::make_tuple("Opens a 'cmd' process then creates a remote thread using CreateRemoteThread", RmtCreateRemoteThread)
     );
 
     availableCommands.emplace(

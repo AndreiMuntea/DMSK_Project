@@ -150,6 +150,7 @@
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="Ioctl.cpp" />
     <ClCompile Include="ProcessUtils.cpp" />
+    <ClCompile Include="RemoteThread.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="Ioctl.hpp" />
     <ClInclude Include="NtDefinitions.hpp" />
     <ClInclude Include="ProcessUtils.hpp" />
+    <ClInclude Include="RemoteThread.hpp" />
     <ClInclude Include="ThreadPool.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -46,6 +46,12 @@
     <Filter Include="Source Files\Ioctl">
       <UniqueIdentifier>{e70aa786-2e05-4df0-a492-6cf8cd160858}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Remote Thread">
+      <UniqueIdentifier>{1c3e9e99-d531-4047-b88b-56e5ff28dda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Remote Thread">
+      <UniqueIdentifier>{d40dec68-b85d-4dce-80dd-e9db4da419da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -68,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="Ioctl.cpp">
       <Filter>Source Files\Ioctl</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteThread.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Ioctl.hpp">
       <Filter>Header Files\Ioctl</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteThread.hpp">
+      <Filter>Header Files\Remote Thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
