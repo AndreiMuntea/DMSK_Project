@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\cpp_support">
+      <UniqueIdentifier>{e89e8898-93b7-4ec9-a0e2-d480f00ff087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\includes">
+      <UniqueIdentifier>{e478324f-dd1f-44ac-a51f-72883293caf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\includes\cpp_support">
+      <UniqueIdentifier>{87529711-951d-41b7-a896-1393d71e389d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\includes\memory">
+      <UniqueIdentifier>{ef566ef6-e0dc-475a-b011-153411800020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\includes\locks">
+      <UniqueIdentifier>{c493330f-6e23-43ce-94af-9e7bb1a7e157}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\cpp_init.hpp">
+      <Filter>Header Files\includes\cpp_support</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_definitions.hpp">
+      <Filter>Header Files\includes\cpp_support</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_tags.hpp">
+      <Filter>Header Files\includes\cpp_support</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_object.hpp">
+      <Filter>Header Files\includes\cpp_support</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_lock.hpp">
+      <Filter>Header Files\includes\locks</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_lockguard.hpp">
+      <Filter>Header Files\includes\locks</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_default_delete.hpp">
+      <Filter>Header Files\includes\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cpp_unique_pointer.hpp">
+      <Filter>Header Files\includes\memory</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cpp_init.cpp">
+      <Filter>Source Files\cpp_support</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp_definitions.cpp">
+      <Filter>Source Files\cpp_support</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
